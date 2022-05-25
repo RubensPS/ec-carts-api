@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Document(collection = "carts")
 @Getter
@@ -19,12 +20,11 @@ public class CartEntity {
     private Boolean isActiveStatus;
 
     @Field
-    private HashMap<String, Long> products;
+    private Map<String, Long> products = new HashMap<>();
 
     public CartEntity(String userId) {
         this.userId = userId;
         this.isActiveStatus = true;
-        this.products = new HashMap<>();
     }
 
 }

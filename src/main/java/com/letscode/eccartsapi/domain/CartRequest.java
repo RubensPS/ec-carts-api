@@ -1,18 +1,23 @@
 package com.letscode.eccartsapi.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 public class CartRequest {
+
     private String userId;
 
     public CartEntity toEntity() {
         return new CartEntity(
                 this.getUserId()
         );
+    }
+
+    public CartRequest(String userId) {
+        this.userId = userId;
     }
 }

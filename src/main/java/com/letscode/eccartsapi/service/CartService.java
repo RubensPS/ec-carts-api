@@ -38,8 +38,8 @@ public class CartService {
 
     public CartResponse addProduct(AddProductRequest request) {
         CartEntity entity = this.cartRepository.getActiveCart(request.getUserId().toString(), true).get(0);
-        entity.getProducts().merge(request.getProductId(), request.getQuantity(), (oldQuantity, newQuantity) -> oldQuantity + newQuantity);
-        CartResponse response = new CartResponse(entity);
+        entity.getProducts().merge(request.getProductId(), request.getQuantity(), (oldQuantity, newQuantity) -> (oldQuantity + newQuantity));
+        CartResponse response = new CartResponse(this.cartRepository.save(entity));
         return response;
     }
 
