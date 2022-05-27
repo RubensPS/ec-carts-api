@@ -48,7 +48,7 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
         }
         List<CartResponse> checkCart = cartService.getActiveCart(request.getUserId().toString());
-        if (checkCart.size() == 0) {
+        if (checkCart.isEmpty()) {
             cartService.addCart(new CartRequest(request.getUserId().toString()));
         }
         CartResponse response = cartService.addProduct(request);
