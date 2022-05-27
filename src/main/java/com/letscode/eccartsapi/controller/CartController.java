@@ -33,9 +33,12 @@ public class CartController {
     }
 
     @GetMapping("cart/user/{userId}")
-    public ResponseEntity<List<CartResponse>> getActiveCart(@PathVariable String userId) {
+    public ResponseEntity<CartResponse> getActiveCart(@PathVariable String userId) {
         List<CartResponse> response = cartService.getActiveCart(userId);
-        return ResponseEntity.ok(response);
+        if(response.size() == 1) {
+            return ResponseEntity.ok(response.get(0));
+        }
+        return ResponseEntity.unprocessableEntity().build();
     }
 
     @PostMapping("/add/product")
