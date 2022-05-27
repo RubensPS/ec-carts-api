@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class CartEntity {
     private String id;
     private String userId;
     private Boolean isActiveStatus;
+    private BigDecimal totalPrice;
 
     @Field
     private Map<String, Long> products = new HashMap<>();
@@ -25,6 +27,7 @@ public class CartEntity {
     public CartEntity(String userId) {
         this.userId = userId;
         this.isActiveStatus = true;
+        this.totalPrice = BigDecimal.ZERO;
     }
 
 }
