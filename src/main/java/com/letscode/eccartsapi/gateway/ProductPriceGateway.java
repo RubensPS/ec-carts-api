@@ -16,7 +16,7 @@ public class ProductPriceGateway {
     }
 
     public ResponseEntity<BigDecimal> getPrice(String productId) {
-        String url = String.format("http://productsAPI:8082/products//%s", productId);
+        String url = String.format("http://productsAPI:8082/products/get/price/%s", productId);
         return restTemplate.getForEntity(url, BigDecimal.class);
     }
 

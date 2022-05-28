@@ -22,8 +22,7 @@ public class CartController {
 
     @PostMapping("/add")
     public ResponseEntity<CartResponse> addNewCart(@RequestBody CartRequest request) {
-        CartResponse response = cartService.addCart(request);
-        return ResponseEntity.ok(response);
+        return cartService.addCart(request);
     }
 
     @GetMapping("/cart/{id}")
@@ -41,6 +40,11 @@ public class CartController {
         return ResponseEntity.unprocessableEntity().build();
     }
 
+    @DeleteMapping("cart/remove/{userId}")
+    public ResponseEntity<String> deleteActiveCart(@PathVariable String userId) {
+        return cartService.deleteCart(userId);
+    }
+
     @PostMapping("/add/product")
     public ResponseEntity<CartResponse> addNewProduct(@RequestBody AddProductRequest request) {
         ResponseEntity<String> userResponse = userGateway.getUser(request.getUserId());
@@ -48,7 +52,7 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
         }
         List<CartResponse> checkCart = cartService.getActiveCart(request.getUserId().toString());
-        if (checkCart.isEmpty()) {
+        if (checkCart.size() == 0) {
             cartService.addCart(new CartRequest(request.getUserId().toString()));
         }
         CartResponse response = cartService.addProduct(request);
