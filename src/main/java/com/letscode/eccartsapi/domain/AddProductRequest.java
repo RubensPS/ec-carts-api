@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class AddProductRequest {
 
-    private Integer userId;
+    private String userId;
     private String productId;
     private Long quantity;
 

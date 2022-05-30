@@ -31,7 +31,7 @@ public class CartController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("cart/user/{userId}")
+    @GetMapping("/cart/user/{userId}")
     public ResponseEntity<CartResponse> getActiveCart(@PathVariable String userId) {
         List<CartResponse> response = cartService.getActiveCart(userId);
         if(response.size() == 1) {
@@ -40,7 +40,7 @@ public class CartController {
         return ResponseEntity.unprocessableEntity().build();
     }
 
-    @DeleteMapping("cart/remove/{userId}")
+    @DeleteMapping("/cart/remove/{userId}")
     public ResponseEntity<String> deleteActiveCart(@PathVariable String userId) {
         return cartService.deleteCart(userId);
     }

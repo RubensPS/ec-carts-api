@@ -55,7 +55,7 @@ public class CartService {
     }
 
     public CartResponse addProduct(AddProductRequest request) {
-        CartEntity entity = this.cartRepository.getActiveCart(request.getUserId().toString(), true).get(0);
+        CartEntity entity = this.cartRepository.getActiveCart(request.getUserId(), true).get(0);
         System.out.printf("TESTE:%s", entity.getProducts());
         entity.getProducts().merge(request.getProductId(), request.getQuantity(), (oldQuantity, newQuantity) -> (oldQuantity + newQuantity));
         BigDecimal totalPrice = entity.getProducts().entrySet().stream()
