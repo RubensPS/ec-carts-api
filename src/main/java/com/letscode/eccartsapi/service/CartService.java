@@ -50,7 +50,11 @@ public class CartService {
         if (entity.isEmpty()) {
             return ResponseEntity.unprocessableEntity().body("Cart not found. Check imput data.");
         }
+        if (!entity.get().getIsActiveStatus()) {
+            return ResponseEntity.unprocessableEntity().body("Cart is already unnactive.");
+        }
         entity.get().setIsActiveStatus(false);
+        cartRepository.save(entity.get());
         return ResponseEntity.ok().body("Cart status updated to inactive.");
     }
 
