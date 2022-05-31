@@ -45,6 +45,15 @@ public class CartService {
         return entity.stream().map(e -> new CartResponse(e)).toList();
     }
 
+    public ResponseEntity<String> changeStatus(String cartId) {
+        Optional<CartEntity> entity = cartRepository.findById(cartId);
+        if (entity.isEmpty()) {
+            return ResponseEntity.unprocessableEntity().body("Cart not found. Check imput data.");
+        }
+        entity.get().setIsActiveStatus(false);
+        return ResponseEntity.ok().body("Cart status updated to inactive.");
+    }
+
     public ResponseEntity<String> deleteCart(String userId) {
         List<CartEntity> entities = this.cartRepository.getActiveCart(userId, true);
         if (entities.isEmpty()) {

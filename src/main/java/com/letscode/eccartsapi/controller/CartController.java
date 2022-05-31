@@ -59,4 +59,9 @@ public class CartController {
         return ResponseEntity.ok(response);
     }
 
+    @PatchMapping("/status/{cartId}")
+        public ResponseEntity<String> changeCartStatus(@PathVariable String cartId) {
+        return cartService.changeStatus(cartId);
+    }
+
 }
