@@ -51,7 +51,7 @@ public class CartService {
             return ResponseEntity.unprocessableEntity().body("Cart not found. Check imput data.");
         }
         if (!entity.get().getIsActiveStatus()) {
-            return ResponseEntity.unprocessableEntity().body("Cart is already unnactive.");
+            return ResponseEntity.unprocessableEntity().body("Cart is already inactive.");
         }
         entity.get().setIsActiveStatus(false);
         cartRepository.save(entity.get());
@@ -69,14 +69,12 @@ public class CartService {
 
     public CartResponse addProduct(AddProductRequest request) {
         CartEntity entity = this.cartRepository.getActiveCart(request.getUserId(), true).get(0);
-        System.out.printf("TESTE:%s", entity.getProducts());
         entity.getProducts().merge(request.getProductId(), request.getQuantity(), (oldQuantity, newQuantity) -> (oldQuantity + newQuantity));
         BigDecimal totalPrice = entity.getProducts().entrySet().stream()
                 .map(p -> (productPriceGateway.getPrice(p.getKey()).getBody()
                         .multiply(BigDecimal.valueOf(p.getValue()))))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         entity.setTotalPrice(totalPrice);
-        System.out.printf("TESTE2:%s", entity.getTotalPrice());
         CartResponse response = new CartResponse(this.cartRepository.save(entity));
         return response;
     }
